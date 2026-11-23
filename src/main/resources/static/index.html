@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<!-- Indica que el documento utiliza HTML5 -->
+
+<html lang="es">
+
+<head>
+    <!-- Configuración de la página -->
+
+    <meta charset="UTF-8">
+    <!-- Permite mostrar tildes y caracteres especiales -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Adapta la página a celulares, tabletas y computadores -->
+
+    <title>CREA BOX | Kits Creativos</title>
+    <!-- Nombre que aparece en la pestaña del navegador -->
+
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Conexión con los estilos CSS -->
+
+</head>
+
+<body>
+
+    <header>
+        <!-- Encabezado principal del sitio -->
+
+        <h1>CREA BOX</h1>
+
+        <p>Descubre tu creatividad, crea algo único.</p>
+
+    </header>
+
+    <main>
+
+        <section>
+            <!-- Sección de bienvenida -->
+
+            <h2>¡Bienvenido a CREA BOX!</h2>
+
+            <p>
+                Encuentra kits creativos para desarrollar
+                tus habilidades y descubrir nuevas ideas.
+            </p>
+
+        </section>
+
+        <section>
+            <!-- Categorías cargadas desde la base de datos -->
+
+            <h2>Nuestras categorías</h2>
+
+            <ul id="lista-categorias">
+                <li>Cargando categorías...</li>
+            </ul>
+
+        </section>
+
+        <section>
+            <!-- Productos cargados desde la base de datos -->
+
+            <h2>Nuestros productos</h2>
+
+            <div id="lista-productos">
+                <p>Cargando productos...</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <!-- Pie de página -->
+
+        <p>CREA BOX - Plataforma virtual de kits creativos</p>
+
+    </footer>
+
+    <script>
+
+        // Dirección para consultar las categorías y los productos
+        const API_CATEGORIAS = "/api/categorias";
+        const API_PRODUCTOS = "/api/productos";
+
+
+        // ==========================================
+        // FUNCIÓN PARA CARGAR LAS CATEGORÍAS
+        // ==========================================
+
+        async function cargarCategorias() {
+
+            // Obtiene la lista donde se mostrarán las categorías
+            const lista = document.getElementById("lista-categorias");
+
+            try {
+
+                // Consulta las categorías en Spring Boot
+                const respuesta = await fetch(API_CATEGORIAS);
+
+                if (!respuesta.ok) {
+                    throw new Error("No se pudieron consultar las categorías");
+                }
+
+                // Convierte la respuesta a formato JSON
+                const categorias = await respuesta.json();
+
+                // Limpia el contenido anterior
+                lista.innerHTML = "";
+
+                // Comprueba si existen categorías
+                if (categorias.length === 0) {
+
+                    lista.innerHTML = "<li>No hay categorías registradas.</li>";
+                    return;
+
+                }
+
+                // Recorre todas las categorías recibidas
+                categorias.forEach(categoria => {
+
+                    const elemento = document.createElement("li");
+
+                    // Obtiene el nombre de la categoría
+                    elemento.textContent = categoria.nombre;
+
+                    // Agrega la categoría a la lista
+                    lista.appendChild(elemento);
+
+                });
+
+            } catch (error) {
+
+                // Muestra el error en la consola
+                console.error("Error al cargar categorías:", error);
+
+                lista.innerHTML = "<li>Error al cargar las categorías.</li>";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // FUNCIÓN PARA CARGAR LOS PRODUCTOS
+        // ==========================================
+
+        async function cargarProductos() {
+
+            // Obtiene el contenedor de los productos
+            const contenedor = document.getElementById("lista-productos");
+
+            try {
+
+                // Consulta los productos en Spring Boot
+                const respuesta = await fetch(API_PRODUCTOS);
+
+                if (!respuesta.ok) {
+                    throw new Error("No se pudieron consultar los productos");
+                }
+
+                // Convierte la respuesta a formato JSON
+                const productos = await respuesta.json();
+
+                // Limpia el contenido anterior
+                contenedor.innerHTML = "";
+
+                // Comprueba si existen productos
+                if (productos.length === 0) {
+
+                    contenedor.textContent = "No hay productos registrados.";
+                    return;
+
+                }
+
+                // Recorre todos los productos recibidos
+                productos.forEach(producto => {
+
+                    // Crea la tarjeta del producto
+                    const tarjeta = document.createElement("article");
+                    tarjeta.classList.add("tarjeta-producto");
+
+                    // Espacio visual para la imagen del producto
+                    const imagen = document.createElement("div");
+                    imagen.classList.add("imagen-producto");
+                    imagen.textContent = "🎨";
+
+                    // Contenedor de la información
+                    const informacion = document.createElement("div");
+                    informacion.classList.add("informacion-producto");
+
+                    // Nombre del producto
+                    const nombre = document.createElement("h3");
+                    nombre.textContent = producto.nombre;
+
+                    // Precio del producto
+                    const precio = document.createElement("p");
+                    precio.classList.add("precio-producto");
+                    precio.textContent = "$" + producto.precio;
+
+                    // Existencias disponibles
+                    const existencias = document.createElement("p");
+                    existencias.classList.add("existencias-producto");
+                    existencias.textContent =
+                        "Disponibles: " + producto.existencias;
+
+                    // Organiza los elementos dentro de la tarjeta
+                    informacion.appendChild(nombre);
+                    informacion.appendChild(precio);
+                    informacion.appendChild(existencias);
+
+                    // Agrega la información a la tarjeta
+                    tarjeta.appendChild(imagen);
+                    tarjeta.appendChild(informacion);
+
+                    // Agrega la tarjeta al catálogo
+                    contenedor.appendChild(tarjeta);
+
+                });
+
+            } catch (error) {
+
+                // Muestra el error en la consola
+                console.error("Error al cargar productos:", error);
+
+                contenedor.textContent = "Error al cargar los productos.";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // INICIO DE LAS CONSULTAS
+        // ==========================================
+
+        // Ejecuta las funciones cuando se carga la página
+        cargarCategorias();
+        cargarProductos();
+
+    </script>
+
+</body>
+
+</html>

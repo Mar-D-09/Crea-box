@@ -1,0 +1,157 @@
+
+/* Estilos generales de CREA BOX */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f5ef;
+    color: #3e2723;
+}
+
+/* Encabezado */
+
+header {
+    background-color: #7aa874;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+}
+
+header h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-size: 17px;
+}
+
+/* Contenido principal */
+
+main {
+    max-width: 1150px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+section h2 {
+    font-size: 25px;
+    margin-bottom: 18px;
+    color: #496b45;
+}
+
+section p {
+    line-height: 1.7;
+}
+
+/* Lista de categorías */
+
+#lista-categorias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    list-style: none;
+}
+
+#lista-categorias li {
+    background-color: #e5eddf;
+    color: #3e5c39;
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* Catálogo de productos */
+
+#lista-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* Tarjetas */
+
+.tarjeta-producto {
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-producto:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.13);
+}
+
+/* Espacio para imagen */
+
+.imagen-producto {
+    height: 170px;
+    background-color: #e9eee3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 55px;
+}
+
+/* Información del producto */
+
+.informacion-producto {
+    padding: 20px;
+}
+
+.informacion-producto h3 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #3e2723;
+}
+
+.precio-producto {
+    font-size: 21px;
+    font-weight: bold;
+    color: #648b58;
+    margin-bottom: 10px;
+}
+
+.existencias-producto {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Pie de página */
+
+footer {
+    background-color: #3e2723;
+    color: white;
+    text-align: center;
+    padding: 22px;
+    margin-top: 50px;
+}
+
+/* Adaptación para celulares */
+
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    section h2 {
+        font-size: 22px;
+    }
+
+    #lista-productos {
+        grid-template-columns: 1fr;
+    }
+}
